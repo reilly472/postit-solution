@@ -42,10 +42,11 @@ class UsersController < ApplicationController
     end
     
     def set_user
-        @user = User.find(params[:id]) 
+        @user = User.find_by slug: params[:id] 
     end
     
     def require_same_user
+        return true if current_user == @user
         flash[:error] = "You're not allowed to do that"
         redirect_to root_path
     end
